@@ -1,0 +1,19 @@
+Our development plan
+
+We'll build the project professionally, one module at a time:
+
+Project Setup ✅
+Backend Setup ✅ (Current)
+MongoDB Connection
+User Authentication
+Dashboard
+Health Profile
+Medical Record Upload
+AI Report Analysis
+AI Chatbot
+Food Analysis
+Medication Reminder
+Nearby Hospitals
+Admin Panel
+
+Don't skip steps. A strong backend foundation will make adding the AI and healthcare features much easier later.
