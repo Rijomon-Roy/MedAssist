@@ -17,3 +17,7 @@ Nearby Hospitals
 Admin Panel
 
 Don't skip steps. A strong backend foundation will make adding the AI and healthcare features much easier later.
+
+'''
+"Continue MedAssist from Authentication."
+''''

@@ -10,14 +10,26 @@ const cors = require("cors");
 
 const connectDB = require("./config/db");
 
+// Import Routes
+const authRoutes = require("./routes/authRoutes");
+const userRoutes = require("./routes/userRoutes");
+
 // Connect to MongoDB
 connectDB();
 
+// Create Express App
 const app = express();
 
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+console.log("authRoutes:", authRoutes);
+console.log("userRoutes:", userRoutes);
+
+// Routes
+app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
 
 // Default Route
 app.get("/", (req, res) => {
