@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { login } from "../services/authService";
+import { AuthContext } from "../context/AuthContext";
+import { login as loginUser } from "../services/authService";
 
 function Login() {
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -23,30 +25,22 @@ function Login() {
     e.preventDefault();
 
     try {
-      const data = await login(formData);
+      const data = await loginUser(formData);
 
-   console.log("Login Response:", data);
-console.log("Token:", data.token);
-console.log("User:", data.user);
+      console.log("Login Response:", data);
+      console.log("Token:", data.token);
+      console.log("User:", data.user);
 
-localStorage.setItem("token", data.token);
-localStorage.setItem("user", JSON.stringify(data.user));
+      // Save token
+      localStorage.setItem("token", data.token);
 
-console.log("Saved User:", localStorage.getItem("user"));
-console.log("Saved Token:", localStorage.getItem("token"));
+      // Update AuthContext (this also saves the user)
+      login(data.user);
 
-// Save token
-localStorage.setItem("token", data.token);
+      setMessage("Login Successful!");
 
-// Save user
-localStorage.setItem("user", JSON.stringify(data.user));
-
-setMessage("Login Successful!");
-
-setTimeout(() => {
-  navigate("/dashboard");
-}, 1500);
-
+      // Redirect to Dashboard
+      navigate("/dashboard");
     } catch (error) {
       setMessage(
         error.response?.data?.message || "Login Failed"
@@ -61,7 +55,6 @@ setTimeout(() => {
       {message && <p>{message}</p>}
 
       <form onSubmit={handleSubmit}>
-
         <input
           type="email"
           name="email"
@@ -83,14 +76,12 @@ setTimeout(() => {
         <button type="submit">
           Login
         </button>
-
       </form>
 
       <p>
         Don't have an account?
         <Link to="/register"> Register</Link>
       </p>
-
     </div>
   );
 }
