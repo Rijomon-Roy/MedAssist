@@ -24,23 +24,22 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setMessage("");
+
     try {
       const data = await loginUser(formData);
-
-      console.log("Login Response:", data);
-      console.log("Token:", data.token);
-      console.log("User:", data.user);
 
       // Save token
       localStorage.setItem("token", data.token);
 
-      // Update AuthContext (this also saves the user)
+      // Save user in AuthContext
       login(data.user);
 
       setMessage("Login Successful!");
 
       // Redirect to Dashboard
       navigate("/dashboard");
+
     } catch (error) {
       setMessage(
         error.response?.data?.message || "Login Failed"
@@ -55,6 +54,7 @@ function Login() {
       {message && <p>{message}</p>}
 
       <form onSubmit={handleSubmit}>
+
         <input
           type="email"
           name="email"
@@ -73,15 +73,29 @@ function Login() {
           required
         />
 
+        <div
+          style={{
+            textAlign: "right",
+            marginTop: "10px",
+            marginBottom: "15px",
+          }}
+        >
+          <Link to="/forgot-password">
+            Forgot Password?
+          </Link>
+        </div>
+
         <button type="submit">
           Login
         </button>
+
       </form>
 
       <p>
         Don't have an account?
         <Link to="/register"> Register</Link>
       </p>
+
     </div>
   );
 }

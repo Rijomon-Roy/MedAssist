@@ -1,31 +1,22 @@
-import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
+import Navbar from "../components/Navbar";
 
 function Dashboard() {
-  const navigate = useNavigate();
-
-  const user = JSON.parse(localStorage.getItem("user"));
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-
-    navigate("/login");
-  };
+  const { user } = useContext(AuthContext);
 
   return (
-    <div>
-      <h1>Dashboard</h1>
+    <>
+      <Navbar />
 
-      <h2>Welcome {user?.name}</h2>
+      <div className="container">
+        <h1>Dashboard</h1>
 
-      <p>Email: {user?.email}</p>
+        <h2>Welcome, {user?.name}</h2>
 
-      <br />
-
-      <button onClick={handleLogout}>
-        Logout
-      </button>
-    </div>
+        <p>Email: {user?.email}</p>
+      </div>
+    </>
   );
 }
 
