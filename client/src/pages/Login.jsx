@@ -1,3 +1,4 @@
+import { getUserProfile } from "../services/userService"; 
 import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
@@ -29,16 +30,26 @@ function Login() {
     try {
       const data = await loginUser(formData);
 
-      // Save token
-      localStorage.setItem("token", data.token);
+      // Save user and token
+login(data);
 
-      // Save user in AuthContext
-      login(data.user);
+if (data.user.profileCompleted) {
+  navigate("/dashboard");
+} else {
+  navigate("/complete-profile");
+}
 
-      setMessage("Login Successful!");
+// Fetch latest profile
+const profile = await getUserProfile();
 
-      // Redirect to Dashboard
-      navigate("/dashboard");
+setMessage("Login Successful!");
+
+// Redirect based on profile status
+if (profile.profileCompleted) {
+  navigate("/dashboard");
+} else {
+  navigate("/complete-profile");
+}
 
     } catch (error) {
       setMessage(

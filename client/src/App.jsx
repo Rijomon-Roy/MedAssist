@@ -7,6 +7,9 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+import CompleteProfile from "./pages/CompleteProfile";
+import ProfileCompletedRoute from "./components/ProfileCompletedRoute";
+import Profile from "./pages/Profile";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -32,13 +35,29 @@ function App() {
         <Route path="/reset-password/:token" element={<ResetPassword />} />
 
         <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
+  path="/dashboard"
+  element={
+    <ProfileCompletedRoute>
+      <Dashboard />
+    </ProfileCompletedRoute>
+  }
+/>
+        <Route
+  path="/complete-profile"
+  element={
+    <ProtectedRoute>
+      <CompleteProfile />
+    </ProtectedRoute>
+  }
+/>
+<Route
+  path="/profile"
+  element={
+    <ProfileCompletedRoute>
+      <Profile />
+    </ProfileCompletedRoute>
+  }
+/>
 
       </Routes>
     </BrowserRouter>

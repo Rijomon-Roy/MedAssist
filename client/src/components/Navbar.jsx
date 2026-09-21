@@ -1,28 +1,37 @@
 import { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
 function Navbar() {
   const { user, logout } = useContext(AuthContext);
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    logout();
-    navigate("/login");
-  };
 
   return (
-    <nav>
+    <nav
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        padding: "15px 30px",
+        backgroundColor: "#1976d2",
+        color: "#fff",
+      }}
+    >
       <h2>🩺 MedAssist</h2>
 
-      <div>
-        <Link to="/dashboard">Dashboard</Link>
+      <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+        <span>Welcome, {user?.name}</span>
 
-        <span style={{ margin: "0 15px" }}>
-          Hello, {user?.name}
-        </span>
-
-        <button onClick={handleLogout}>
+        <button
+          onClick={logout}
+          style={{
+            padding: "8px 15px",
+            border: "none",
+            borderRadius: "5px",
+            cursor: "pointer",
+            backgroundColor: "#fff",
+            color: "#1976d2",
+            fontWeight: "bold",
+          }}
+        >
           Logout
         </button>
       </div>
